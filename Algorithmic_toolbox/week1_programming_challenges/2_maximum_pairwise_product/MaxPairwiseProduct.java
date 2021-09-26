@@ -1,19 +1,28 @@
 import java.util.*;
 import java.io.*;
+import java.math.BigInteger;
 
 public class MaxPairwiseProduct {
-    static int getMaxPairwiseProduct(int[] numbers) {
-        int max_product = 0;
+    static BigInteger getMaxPairwiseProduct(int[] numbers) {
         int n = numbers.length;
-
-        for (int first = 0; first < n; ++first) {
-            for (int second = first + 1; second < n; ++second) {
-                max_product = Math.max(max_product,
-                    numbers[first] * numbers[second]);
+        // given all numbers are positive
+        int max_value = -1;
+        int index = -1;
+        for (int i = 0; i < n; i++) {
+            if (numbers[i] > max_value) {
+                max_value = numbers[i];
+                index = i;
             }
         }
-
-        return max_product;
+        int second_max_value = -1;
+        // find second max value by skipping the index of the max value
+        for (int i = 0; i < n; i++) {
+            if ((numbers[i] > second_max_value) && (i != index)) {
+                second_max_value = numbers[i];
+            }
+        }
+        BigInteger a = BigInteger.valueOf(max_value), b = BigInteger.valueOf(second_max_value);
+        return a.multiply(b);
     }
 
     public static void main(String[] args) {
